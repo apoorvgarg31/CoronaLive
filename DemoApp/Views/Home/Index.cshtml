@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "COVID - 19";
+}
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "https://corona.lmao.ninja/countries",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                //alert(JSON.stringify(data));
+                $("#DIV").html('');
+                var DIV = '';
+                $.each(data, function (i, item) {
+                    var rows = "<tr>" +
+                        "<td id='country'>" + item.country + "</td>" +
+                        "<td id='cases'>" +   item.cases + "</td>" +
+                        "<td id='todayCases'>" + item.todayCases + "</td>" +
+                        "<td id='deaths'>" + item.deaths + "</td>" +
+                        "<td id='todayDeaths'>" + item.todayDeaths + "</td>" +
+                        "<td id='recovered'>" + item.recovered + "</td>" +
+                        "<td id='critical'>" + item.critical + "</td>" +
+
+                        "</tr>";
+                    $('#Table').append(rows);
+                }); //End of foreach Loop
+                console.log(data);
+            }, //End of AJAX Success function
+
+            failure: function (data) {
+                alert(data.responseText);
+            }, //End of AJAX failure function
+            error: function (data) {
+                alert(data.responseText);
+            } //End of AJAX error function
+
+        });
+    });
+</script>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Live Statistics of COVID - 19</h1>
+
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <h1>Total Number of Cases</h1> 
+    </div>   <!--en dof panel-heading -->
+    <div class="panel-body">
+        <table class="table table-bordered" id="Table">
+            <tr>
+                <th>Country</th>
+                <th>Cases</th>
+                <th>Today's Cases</th>
+                <th>Deaths</th>
+                <th>Today's Death</th>
+                <th>Recovered</th>
+                <th>Critical</th>
+            </tr>   <!--end of table-row -->
+        </table>   <!--end of table -->
+    </div> <!--end of Panel-body -->
+</div> <!--end of Panel -->
